@@ -17,7 +17,7 @@ variable "keypair_location" {
 
 variable "vpc_cidr" {
   type = string
-  default = "192.168.1.0/24"
+  default = "192.168.0.0/16"
 }
 
 variable "AZ1" {
@@ -27,7 +27,7 @@ variable "AZ1" {
 
 variable "subnet1_cidr" {
   type = string
-  default = "192.168.1.32/27"
+  default = "192.168.1.0/24"
 }
 
 variable "instance_type" {
@@ -40,15 +40,10 @@ variable "instance_node_type" {
   default = "t3.small"
 }
 
-variable "aws_ami" {
-  type = string
-  default = "ami-0866a04d72a1f5479"
-}
-
 variable "bucket_name" {
     type = string
     description = "The name of the your bucket"
-    default = "darellebucket"   
+    default = "mont-s3-lab"   
 }
 
 variable "cp-path" {

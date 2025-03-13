@@ -1,5 +1,5 @@
 cat << EOF >> mount_s3.sh
-#!/bin/bash -x
+#!/bin/bash 
 sudo yum update -y
 sudo yum upgrade -y
 
@@ -9,7 +9,7 @@ sudo yum install ./mount-s3.rpm -y
 rm -f ./mount-s3.rpm
 
 ## Create mount point directory
-sudo mkdir /mount_s3
-sudo mount-s3 ${s3_bucket_id} /mount_s3
+mkdir ~/mount_s3
+mount-s3 ${s3_bucket_id} ~/mount_s3
 
 EOF
