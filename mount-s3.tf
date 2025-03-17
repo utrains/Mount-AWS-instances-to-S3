@@ -1,3 +1,4 @@
+/*
 # ~~~~~~~~~ Create the file to config aws credentials in the Jenkins server and agents ~~~~~~~~ #
 
 resource "null_resource" "Create_credentials_folder" {
@@ -23,12 +24,14 @@ resource "null_resource" "Create_credentials_folder" {
     ]
   }
 }
+*/
 
 # ~~~~~~~~~~~~ Send the current aws credentials in the Jenkins server and agents ~~~~~~~~~~~~~~ #
 
  resource "null_resource" "send_aws_credentials" {
 
-  depends_on =[ null_resource.Create_credentials_folder["agent-1"] , null_resource.Create_credentials_folder["agent-2"] , null_resource.Create_credentials_folder["jenkins-server"] ]
+# depends_on =[ null_resource.Create_credentials_folder["agent-1"] , null_resource.Create_credentials_folder["agent-2"] , null_resource.Create_credentials_folder["jenkins-server"] ]
+  depends_on =[ aws_instance.ec2-instance["agent-1"] , aws_instance.ec2-instance["agent-2"], aws_instance.ec2-instance["jenkins-server"] , null_resource.generate_s3_mount_script]
   for_each = local.servers
 
     connection {
@@ -47,7 +50,7 @@ resource "null_resource" "Create_credentials_folder" {
     destination = "mount_s3.sh"
 
     }
-
+/*
     provisioner "file" {
 
     source      = "~/.aws/config"
@@ -62,6 +65,9 @@ resource "null_resource" "Create_credentials_folder" {
 
     }
  }
+
+*/
+}
 
 # ~~~~~~~~~~ Run the script to mount the S3 Bucket to the Jenkins server and agents ~~~~~~~~~~~ #
 
@@ -80,9 +86,13 @@ resource "null_resource" "mount_s3" {
 
   provisioner "remote-exec" {
     inline = [
+
+/*
       "sudo mkdir ~/.aws",
       "sudo mv config ~/.aws/config",
       "sudo mv credentials ~/.aws/credentials",
+
+*/      
       "sudo chmod +x mount_s3.sh",
       "bash mount_s3.sh",
     ]

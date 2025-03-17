@@ -35,7 +35,7 @@ resource "aws_instance" "ec2-instance" {
   vpc_security_group_ids = each.value.security_group_ids
   key_name               = aws_key_pair.ec2_key.key_name
   user_data              = each.value.userdata
-  iam_instance_profile   = "${aws_iam_instance_profile.instance_profile.name}"
+  iam_instance_profile = aws_iam_instance_profile.instance_profile.name  # Attach IAM profile
   depends_on             = [ null_resource.generate_s3_mount_script , null_resource.upload_files ]
   tags = {
     Name = each.value.name
